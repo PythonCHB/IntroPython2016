@@ -9,13 +9,17 @@ Fizz Buzz examples -- from most straightforward, to most compact.
 def fizzbuzz1(n):
     for i in range(1, n + 1):
         if i % 3 == 0 and i % 5 == 0:
-            print("FizzBuzz")
+            pass
+            # print("FizzBuzz")
         elif i % 3 == 0:
-            print ("Fizz")
+            pass
+            #print ("Fizz")
         elif i % 5 == 0:
-            print ("Buzz")
+            pass
+            #print ("Buzz")
         else:
-            print(i)
+            pass
+            # print(i)
 
 
 def fizzbuzz2(n):
@@ -60,14 +64,15 @@ def fizzbuzz4(n):
     for i in range(1, n + 1):
         msg = "Fizz" if i % 3 == 0 else ''
         msg += "Buzz" if i % 5 == 0 else ''
-        print(msg or i)
+        # print(msg or i)
 
 
 def fizzbuzz5(n):
     """
     a one liner
     """
-    for i in range(1, n + 1): print (("Fizz" * (not (i % 3)) + "Buzz" * (not (i % 5))) or i)
+    for i in range(1, n + 1):
+        print (("Fizz" * (not (i % 3)) + "Buzz" * (not (i % 5))) or i)
 
 
 if __name__ == "__main__":
