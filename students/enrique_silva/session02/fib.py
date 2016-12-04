@@ -21,6 +21,8 @@ def lucas(n):
 
 print([lucas (n) for n in range(20)])
 
+def sum_series()
+
 
 
 

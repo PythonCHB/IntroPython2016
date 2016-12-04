@@ -96,3 +96,6 @@ ENV/
 # PyCharm
 .idea/*
 .idea
+
+#UW Python
+/students/liverpoolforever/session04/sherlock_small.txt

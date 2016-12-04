@@ -58,12 +58,25 @@ def main_menu():
 	print ("1. Send a Thank You")
 	print ("2. Create a Report")
 	print ("3. Exit")
-	return input ("Selection: ")
+	return int(input ("Selection: "))
+
+def send_thank_you(list):
+	amount = input ("Enter amount: ")
+	#todo - check amount is an integer
+	if current_donor(list, name):
+		list = add_donation(list, name, amount)
+	else:
+		list = add_donor(list, name, amount)
+		print (list)
+		print_thank_you_letter(name, amount)
+	return list
 
 def print_donors (list):
 	""" Given a donor list it prints just the donors """
+	print ("")
 	for donations in list:
 		print (donations[0])
+	print ("")
 
 def current_donor (list, donor):
 	""" has this donor donated in the past? """
@@ -79,7 +92,7 @@ def add_donation (list, donor, amount):
 	new_list = []
 	for donations in list:
 		if donor == donations[0]:
-			donations = donations + [amount]
+			donations = donations + [int(amount)]
 		new_list.append (donations)
 	return new_list
 
@@ -95,7 +108,7 @@ def print_thank_you_letter (donor, amount):
 	print ("Your donation will help our organization in so many ways.")
 	print ("")
 
-def donor_totals (list):
+def donor_totals_old (list):
 	""" return an associated array with donation totals for a donor, which is the key for the array """
 	new_list = {}
 	for donations in list:
@@ -104,31 +117,64 @@ def donor_totals (list):
 		for i in range(1,len(donations)):
 			donation_total = donation_total + donations[i]
 		new_list[donor] = donation_total
+	#return new_list
+	return sorted(new_list, key=lambda donors: donors[1])
+
+def total_donation_sort(list):
+	""" sort by total donation """
+	return list[1]
+
+def num_donation_sort(list):
+	""" sort by number of donations """
+	return list[2]
+
+def avg_donation_sort(list):
+	""" sort by average donation """
+	return list[3]
+
+def donor_totals (list):
+	""" return a tuple with the following                   """
+	""" - donor                                             """
+	""" - donation total for that donor                     """
+	""" - number of donations for that donor                """
+	""" - average donation for that donor                   """
+	new_list = []
+	for donations in list:
+		donor = donations[0]
+		donation_total=0
+		for i in range(1,len(donations)):
+			donation_total = donation_total + donations[i]
+		new_list.append((donor, donation_total, len(donations)-1, donation_total/(len(donations)-1)))
 	return new_list
+
+def print_report(list):
+	""" print formatted report """
+	print ('\n{0:<25} {1:<9} {2:<20} {3:<21}'.format ("Donor", "Total", "No. of donations", "Average donation"))
+	for donation in list:
+		print ('{0:<25} ${1:<8,.0f} {2:<20d} ${3:<20,.0f}'.format (donation[0], donation[1], donation[2], donation[3]))
+	print ("")
+
 
 
 if __name__ == '__main__':
 	donor_list = [["Bill Gates", 5000, 10000, 15000], ["Jeff Bezos", 1000, 2000, 3000]]
 	
 	# let's get this puppy started
-	# todo - change to a while loop
-	main_input = main_menu()
-	if main_input == "1":
-		name = input ("Enter name: ")
-		if name == "list":
-			print_donors (donor_list)
-		else:
-			amount = input ("Enter amount: ")
-			# todo - check amount is an integer
-			if current_donor(donor_list, name):
-				donor_list = add_donation(donor_list, name, amount)
+	main_input = int(0)
+	while ((main_input < 1) or (main_input > 3)):
+		main_input = main_menu()
+		if main_input == 1:
+			name = input ("Enter name or list to list donors: ")
+			if name == "list":
+				print_donors (donor_list)
 			else:
-				donor_list = add_donor(donor_list, name, amount)
-			print (donor_list)
-			print_thank_you_letter(name, amount)
-	elif main_input == "2":
-		# create a donor report
-		print (donor_list)
-		donor_total=donor_totals(donor_list)
-		print (donor_total)
+				donor_list = send_thank_you(donor_list)
+			main_input=int(0)
+		elif main_input == 2:
+			# create a sorted detailed donor report and print it
+			print_report (sorted (donor_totals(donor_list), key=total_donation_sort, reverse=True))
+			main_input=int(0)
+
+
+
 

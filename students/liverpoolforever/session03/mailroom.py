@@ -27,20 +27,6 @@ def print_report():
         print(EMAIL.format(*row))
 
 
-        # REPORT = "Donor {:s} - Contribution Amount: "
-        # REPORT.format(donor)
-        # amtList = donorList[donor]
-        # # sorts in reverse order - latest contribution will be first
-        # sortedList = amtList [::-1]
-        # for sortedAmt in sortedList:
-        #     amtPrint = str(sortedAmt)
-        #     amtPrint =+ amtPrint
-        #     # pass
-        # print(REPORT,amtPrint)
-
-
-
-
 def send_thanks():
     print(ASK_NAME)
     listOfDonors = list(donorList.keys())
@@ -90,6 +76,9 @@ To print a report: type "p"
 To exit: type "x"
 """
 
+# wrapper function for handling exceptions in inputs
+def safe_input():
+    pass
 
 def main():
     """

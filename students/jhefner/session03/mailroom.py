@@ -1,6 +1,4 @@
 #!/Users/jhefner/python_dev/uw_python/bin/python
-import time
-
 verbose = False
 
 
@@ -16,7 +14,6 @@ history = {
 
 def send_thank_you():
     if verbose: print("send_thank_you()")
-    time.sleep(0.5)
     end = False
     while not end:
         print("--------------------------")
@@ -43,8 +40,6 @@ def send_thank_you():
             donation_input = input("\n>>> ")
         donation_input = int(donation_input)
         history[thank_you_name]=[int(donation_input)]
-        print("----------\n.Generating\n..your\n...thank you\n....email\n....now")
-        time.sleep(0.5)
         print("\n\nDear "+thank_you_name+",\nIt is with great thanks that we send this note in reception of your donation. Please accept our gratitude and think of us again in the future.\nSincerely,\n\tUs\n\n")
         end=True
 
@@ -52,26 +47,18 @@ def send_thank_you():
 
 def create_a_report():
     if verbose: print("create_a_report()")
-    donation_report = {}
+    report_rows = []
     for key, value in history.items():
-        value_total = 0
-        for i in value:
-            value_total+=i
-        donation_report[key] = value_total
-    # print(donation_report)
-    # donation_report = list(donation_report.items())
-    # print(donation_report)
-    # donation_report = sorted(donation_report,key=lambda x:(-x[1],x[0]))
-    # print(donation_report)
-    # ^^^ this is all stuff i found online but i can't find anything that explains how I should be able to manually go over a dictionary or list of tuples.
+        total_gifts = sum(value)
+        num_gifts = len(value)
+        avg_gift = total_gifts / num_gifts
+        report_rows.append((key,total_gifts, num_gifts, avg_gift))
 
-
-    # print("--------------------------")
-    # print("Here's your report:")
-    # print("--------------------------")
-
-
-
+    print("{:25s} | {:11s} | {:9s} | {:12s}".format(
+        "Donor Name", "Total Given", "Num Gifts", "Avg Gift"))
+    print("-"*66)
+    for row in report_rows:
+        print("{:25s}   {:11.2f}   {:9d}   {:12.2f}".format(*row))
 
 def main():
     if verbose: print("main()")
@@ -92,7 +79,6 @@ def main():
             end=True
         else:
             print("\n\n\nPlease try your selection again.")
-            time.sleep(1)
 
 
 if __name__ == '__main__':
